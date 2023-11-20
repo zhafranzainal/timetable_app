@@ -31,13 +31,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String selectedCourseCode = '';
+  String selectedSection = '';
+  String selectedLab = '';
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  List<Course> timetable = [];
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +48,122 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Your saved schedule will appear here',
+            // Add Course Code
+            TextField(
+              onChanged: (value) {
+                setState(() {
+                  selectedCourseCode = value;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: 'Course Code',
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            // Add Section
+            DropdownButton<String>(
+              value: selectedSection.isNotEmpty
+                  ? selectedSection
+                  : 'Select Section',
+              onChanged: (value) {
+                setState(() {
+                  selectedSection = value!;
+                });
+              },
+              items: <String>['Select Section', '01', '02', '03']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            // Add Lab
+            DropdownButton<String>(
+              value: selectedLab.isNotEmpty ? selectedLab : 'Select Lab',
+              onChanged: (value) {
+                setState(() {
+                  selectedLab = value!;
+                });
+              },
+              items: <String>['Select Lab', '01A', '01B']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            // Add Button to Generate Timetable
+            ElevatedButton(
+              onPressed: () {
+                // Call the function to generate timetable
+                generateTimetable();
+              },
+              child: Text('Generate Timetable'),
+            ),
+            // Add List View to display timetable
+            Expanded(
+              child: ListView.builder(
+                itemCount: timetable.length,
+                itemBuilder: (context, index) {
+                  Course course = timetable[index];
+                  return ListTile(
+                    title: Text('Course Code: ${course.code}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Course Name: ${course.name}'),
+                        Text('Section: ${course.section}'),
+                        Text('Lab: ${course.lab}'),
+                        Text('Time: ${course.time}'),
+                        Text('Location: ${course.location}'),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
+
+  void generateTimetable() {
+    setState(() {
+      timetable = [
+        Course(
+            code: selectedCourseCode,
+            name: 'Database Systems',
+            section: selectedSection,
+            lab: selectedLab,
+            time: '8:00 AM - 10:00 AM',
+            location: 'FSK15'),
+        Course(
+            code: selectedCourseCode,
+            name: 'Database Systems',
+            section: selectedSection,
+            lab: selectedLab,
+            time: '10:30 AM - 12:30 PM',
+            location: 'FSK15'),
+      ];
+    });
+  }
+}
+
+class Course {
+  String code;
+  String name;
+  String section;
+  String lab;
+  String time;
+  String location;
+
+  Course(
+      {required this.code,
+      required this.name,
+      required this.section,
+      required this.lab,
+      required this.time,
+      required this.location});
 }
