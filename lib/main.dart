@@ -158,11 +158,12 @@ class Course {
   String time;
   String location;
 
-  Course(
-      {required this.code,
-      required this.name,
-      required this.section,
-      required this.lab,
-      required this.time,
-      required this.location});
+  Course({
+    required this.code,
+    required this.name,
+    required this.section,
+    required this.lab,
+    required this.time,
+    required this.location,
+  });
 }
