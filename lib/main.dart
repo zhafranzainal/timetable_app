@@ -31,9 +31,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String searchedCourse = '';
   String selectedCourseCode = '';
+  String selectedCourseName = '';
   String selectedSection = '';
   String selectedLab = '';
+
+  // Course code to name mapping
+  List<String> courseCodes = ['BCS1033', 'BCI2023'];
+  Map<String, String> courseMap = {
+    'BCS1033': 'SOFTWARE ENGINEERING',
+    'BCI2023': 'DATABASE SYSTEMS',
+  };
 
   List<Course> timetable = [];
 
@@ -48,17 +57,49 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Add Course Code
+            // Search Course
             TextField(
               onChanged: (value) {
                 setState(() {
-                  selectedCourseCode = value;
+                  searchedCourse = value;
                 });
               },
               decoration: const InputDecoration(
-                labelText: 'Course Code',
+                labelText: 'Search Course',
               ),
             ),
+            // Show matched course codes and names as dropdown
+            searchedCourse.isNotEmpty
+                ? Expanded(
+                    child: Dialog(
+                      child: ListView.builder(
+                        itemCount: courseCodes.length,
+                        itemBuilder: (context, index) {
+                          String courseCode = courseCodes[index];
+                          String courseName = courseMap[courseCode] ?? '';
+                          if (courseCode
+                                  .toLowerCase()
+                                  .contains(searchedCourse.toLowerCase()) ||
+                              courseName
+                                  .toLowerCase()
+                                  .contains(searchedCourse.toLowerCase())) {
+                            return ListTile(
+                              title: Text('$courseCode $courseName'),
+                              onTap: () {
+                                setState(() {
+                                  selectedCourseCode = courseCode;
+                                  selectedCourseName = courseName;
+                                });
+                              },
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
             // Add Section
             DropdownButton<String>(
               value: selectedSection.isNotEmpty
@@ -98,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 generateTimetable();
               },
-              child: Text('Generate Timetable'),
+              child: const Text('Generate Timetable'),
             ),
             // Add List View to display timetable
             Expanded(
@@ -133,14 +174,14 @@ class _MyHomePageState extends State<MyHomePage> {
       timetable = [
         Course(
             code: selectedCourseCode,
-            name: 'Database Systems',
+            name: selectedCourseName,
             section: selectedSection,
             lab: selectedLab,
             time: '8:00 AM - 10:00 AM',
             location: 'FSK15'),
         Course(
             code: selectedCourseCode,
-            name: 'Database Systems',
+            name: selectedCourseName,
             section: selectedSection,
             lab: selectedLab,
             time: '10:30 AM - 12:30 PM',
