@@ -96,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
             // Add Button to Generate Timetable
             ElevatedButton(
               onPressed: () {
-                // Call the function to generate timetable
                 generateTimetable();
               },
               child: Text('Generate Timetable'),
