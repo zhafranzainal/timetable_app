@@ -10,12 +10,12 @@ class HomePageScreen extends StatelessWidget {
           title: const Text('Home'),
           backgroundColor: Colors.blue.shade700,
         ),
-        drawer: const NavigationDrawer(),
+        drawer: const SidebarMenu(),
       );
 }
 
-class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({super.key});
+class SidebarMenu extends StatelessWidget {
+  const SidebarMenu({super.key});
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -31,9 +31,17 @@ class NavigationDrawer extends StatelessWidget {
 }
 
 Widget buildHeader(BuildContext context) => Container(
+      color: Colors.blue.shade700,
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top,
+        bottom: 24,
       ),
+      child: const Column(children: [
+        Text(
+          'UMPSA Scheduler',
+          style: TextStyle(fontSize: 28, color: Colors.white),
+        )
+      ]),
     );
 
 Widget buildMenuItems(BuildContext context) => Container(

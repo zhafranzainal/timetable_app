@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetable_app/model/course_model.dart';
+import 'package:timetable_app/screens/home_page_screen.dart';
 
 class AddTimetableScreen extends StatefulWidget {
   const AddTimetableScreen({super.key});
@@ -27,6 +28,7 @@ class _AddTimetableScreenState extends State<AddTimetableScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SidebarMenu(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text('New timetable'),
