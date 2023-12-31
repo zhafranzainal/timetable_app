@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:timetable_app/model/course_model.dart';
 import 'package:timetable_app/public_components/sidebar_menu.dart';
 
-class AddTimetableScreen extends StatefulWidget {
-  const AddTimetableScreen({super.key});
+class CreateTimetableScreen extends StatefulWidget {
+  const CreateTimetableScreen({super.key});
 
   @override
-  State<AddTimetableScreen> createState() => _AddTimetableScreenState();
+  State<CreateTimetableScreen> createState() => _CreateTimetableScreenState();
 }
 
-class _AddTimetableScreenState extends State<AddTimetableScreen> {
+class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
   String searchedCourse = '';
   String selectedCourseCode = '';
   String selectedCourseName = '';

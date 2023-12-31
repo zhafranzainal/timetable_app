@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timetable_app/screens/add_timetable_screen.dart';
+import 'package:timetable_app/screens/create_timetable_screen.dart';
 
 class SidebarMenu extends StatelessWidget {
   const SidebarMenu({super.key});
@@ -41,7 +41,7 @@ Widget buildMenuItems(BuildContext context) => Container(
           onTap: () {
             Navigator.pop(context);
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const AddTimetableScreen()));
+                builder: (context) => const CreateTimetableScreen()));
           },
         ),
         const Divider(color: Colors.grey),
