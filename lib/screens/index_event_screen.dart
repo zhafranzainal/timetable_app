@@ -17,7 +17,7 @@ class IndexEventScreen extends StatelessWidget {
               ),
               Text(
                 'All events',
-                style: TextStyle(color: Colors.white70, fontSize: 12),
+                style: TextStyle(color: Colors.white70, fontSize: 15),
               ),
             ],
           ),
