@@ -16,7 +16,7 @@ class IndexEventScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               Text(
-                'All events',
+                'June 2023',
                 style: TextStyle(color: Colors.white70, fontSize: 15),
               ),
             ],
