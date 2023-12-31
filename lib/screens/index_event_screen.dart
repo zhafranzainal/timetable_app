@@ -6,10 +6,21 @@ class IndexEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        drawer: const SidebarMenu(),
         appBar: AppBar(
           backgroundColor: Colors.blue.shade700,
-          title: const Text('Events', style: TextStyle(color: Colors.white)),
+          title: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Events',
+                style: TextStyle(color: Colors.white),
+              ),
+              Text(
+                'All events',
+                style: TextStyle(color: Colors.white70, fontSize: 12),
+              ),
+            ],
+          ),
           iconTheme: const IconThemeData(
             color: Colors.white,
           ),
