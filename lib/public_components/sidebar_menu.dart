@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetable_app/screens/create_timetable_screen.dart';
+import 'package:timetable_app/screens/index_event_screen.dart';
 
 class SidebarMenu extends StatelessWidget {
   const SidebarMenu({super.key});
@@ -7,13 +8,14 @@ class SidebarMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Drawer(
         child: SingleChildScrollView(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            buildHeader(context),
-            buildMenuItems(context),
-          ],
-        )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              buildHeader(context),
+              buildMenuItems(context),
+            ],
+          ),
+        ),
       );
 }
 
@@ -48,7 +50,11 @@ Widget buildMenuItems(BuildContext context) => Container(
         ListTile(
           leading: const Icon(Icons.event),
           title: const Text('All Events'),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const IndexEventScreen()));
+          },
         ),
         const Divider(color: Colors.grey),
         ListTile(
