@@ -9,7 +9,7 @@ class IndexEventScreen extends StatefulWidget {
 }
 
 class _IndexEventScreenState extends State<IndexEventScreen> {
-  final notifications = [
+  final taskEvents = [
     TaskEventModel(
         day: 'Tue', date: '20 Jun', time: '9.00 am', title: 'PSM Presentation'),
     TaskEventModel(
@@ -60,7 +60,7 @@ class _IndexEventScreenState extends State<IndexEventScreen> {
                   fontWeight: FontWeight.bold),
             ),
             const Divider(color: Colors.black),
-            ...notifications.map(buildSingleCheckbox).toList(),
+            ...taskEvents.map(buildSingleCheckbox).toList(),
           ],
         ),
       );
