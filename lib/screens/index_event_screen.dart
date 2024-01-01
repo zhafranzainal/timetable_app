@@ -10,11 +10,22 @@ class IndexEventScreen extends StatefulWidget {
 
 class _IndexEventScreenState extends State<IndexEventScreen> {
   final notifications = [
-    CheckboxState(title: 'PSM Presentation'),
-    CheckboxState(title: 'OR Registration'),
-    CheckboxState(title: 'AI Presentation'),
-    CheckboxState(title: 'Proposal Presentation'),
-    CheckboxState(title: 'SPM Final Assessment'),
+    CheckboxState(
+        day: 'Tue', date: '20 Jun', time: '9.00 am', title: 'PSM Presentation'),
+    CheckboxState(
+        day: 'Tue', date: '20 Jun', time: '10.00 pm', title: 'OR Registration'),
+    CheckboxState(
+        day: 'Wed', date: '21 Jun', time: '10.45 am', title: 'AI Presentation'),
+    CheckboxState(
+        day: 'Thu',
+        date: '22 Jun',
+        time: '10.45 am',
+        title: 'Proposal Presentation'),
+    CheckboxState(
+        day: 'Thu',
+        date: '29 Jun',
+        time: '12.00 pm',
+        title: 'SPM Final Assessment'),
   ];
 
   @override
@@ -57,9 +68,23 @@ class _IndexEventScreenState extends State<IndexEventScreen> {
   Widget buildSingleCheckbox(CheckboxState checkbox) => CheckboxListTile(
         value: checkbox.value,
         secondary: const Icon(Icons.error),
-        title: Text(
-          checkbox.title,
-          style: const TextStyle(fontSize: 20),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(checkbox.day, style: const TextStyle(fontSize: 16)),
+                const SizedBox(width: 8),
+                Text(checkbox.date, style: const TextStyle(fontSize: 16)),
+                const SizedBox(width: 8),
+                Text(checkbox.time, style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+            Text(
+              checkbox.title,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ],
         ),
         onChanged: (value) => setState(() => checkbox.value = value!),
       );
