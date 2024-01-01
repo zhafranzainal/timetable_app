@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:timetable_app/model/checkbox_state.dart';
 
-class IndexEventScreen extends StatelessWidget {
+class IndexEventScreen extends StatefulWidget {
   const IndexEventScreen({super.key});
+
+  @override
+  State<IndexEventScreen> createState() => _IndexEventScreenState();
+}
+
+class _IndexEventScreenState extends State<IndexEventScreen> {
+  final notifications = [
+    CheckboxState(title: 'PSM Presentation'),
+    CheckboxState(title: 'OR Registration'),
+    CheckboxState(title: 'AI Presentation'),
+    CheckboxState(title: 'Proposal Presentation'),
+    CheckboxState(title: 'SPM Final Assessment'),
+  ];
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -24,5 +38,21 @@ class IndexEventScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+        body: ListView(
+          padding: EdgeInsets.all(12),
+          children: [
+            ...notifications.map(buildSingleCheckbox).toList(),
+          ],
+        ),
+      );
+
+  Widget buildSingleCheckbox(CheckboxState checkbox) => CheckboxListTile(
+        value: checkbox.value,
+        secondary: const Icon(Icons.error),
+        title: Text(
+          checkbox.title,
+          style: const TextStyle(fontSize: 20),
+        ),
+        onChanged: (value) => setState(() => checkbox.value = value!),
       );
 }
