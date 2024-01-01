@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timetable_app/public_components/sidebar_menu.dart';
 
 class IndexEventScreen extends StatelessWidget {
   const IndexEventScreen({super.key});
