@@ -39,8 +39,16 @@ class _IndexEventScreenState extends State<IndexEventScreen> {
           ),
         ),
         body: ListView(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           children: [
+            const Text(
+              'Today',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold),
+            ),
+            const Divider(color: Colors.black),
             ...notifications.map(buildSingleCheckbox).toList(),
           ],
         ),
