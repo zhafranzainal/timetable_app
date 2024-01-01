@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timetable_app/model/checkbox_state.dart';
+import 'package:timetable_app/model/task_event_model.dart';
 
 class IndexEventScreen extends StatefulWidget {
   const IndexEventScreen({super.key});
@@ -10,18 +10,18 @@ class IndexEventScreen extends StatefulWidget {
 
 class _IndexEventScreenState extends State<IndexEventScreen> {
   final notifications = [
-    CheckboxState(
+    TaskEventModel(
         day: 'Tue', date: '20 Jun', time: '9.00 am', title: 'PSM Presentation'),
-    CheckboxState(
+    TaskEventModel(
         day: 'Tue', date: '20 Jun', time: '10.00 pm', title: 'OR Registration'),
-    CheckboxState(
+    TaskEventModel(
         day: 'Wed', date: '21 Jun', time: '10.45 am', title: 'AI Presentation'),
-    CheckboxState(
+    TaskEventModel(
         day: 'Thu',
         date: '22 Jun',
         time: '10.45 am',
         title: 'Proposal Presentation'),
-    CheckboxState(
+    TaskEventModel(
         day: 'Thu',
         date: '29 Jun',
         time: '12.00 pm',
@@ -65,27 +65,27 @@ class _IndexEventScreenState extends State<IndexEventScreen> {
         ),
       );
 
-  Widget buildSingleCheckbox(CheckboxState checkbox) => CheckboxListTile(
-        value: checkbox.value,
+  Widget buildSingleCheckbox(TaskEventModel taskEventModel) => CheckboxListTile(
+        value: taskEventModel.value,
         secondary: const Icon(Icons.error),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Text(checkbox.day, style: const TextStyle(fontSize: 16)),
+                Text(taskEventModel.day, style: const TextStyle(fontSize: 16)),
                 const SizedBox(width: 8),
-                Text(checkbox.date, style: const TextStyle(fontSize: 16)),
+                Text(taskEventModel.date, style: const TextStyle(fontSize: 16)),
                 const SizedBox(width: 8),
-                Text(checkbox.time, style: const TextStyle(fontSize: 16)),
+                Text(taskEventModel.time, style: const TextStyle(fontSize: 16)),
               ],
             ),
             Text(
-              checkbox.title,
+              taskEventModel.title,
               style: const TextStyle(fontSize: 20),
             ),
           ],
         ),
-        onChanged: (value) => setState(() => checkbox.value = value!),
+        onChanged: (value) => setState(() => taskEventModel.value = value!),
       );
 }
