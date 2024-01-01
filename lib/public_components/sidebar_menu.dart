@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timetable_app/screens/calendar_screen.dart';
 import 'package:timetable_app/screens/create_timetable_screen.dart';
 import 'package:timetable_app/screens/index_event_screen.dart';
 
@@ -60,7 +61,11 @@ Widget buildMenuItems(BuildContext context) => Container(
         ListTile(
           leading: const Icon(Icons.calendar_view_week),
           title: const Text('BCS SEM 1'),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const CalendarScreen()));
+          },
         ),
         ListTile(
           leading: const Icon(Icons.calendar_view_week),
