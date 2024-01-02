@@ -12,7 +12,10 @@ class IndexEventScreen extends StatefulWidget {
 
 class _IndexEventScreenState extends State<IndexEventScreen> {
   Future<List<TaskEventModel>> _fetchEventsFromSupabase() async {
-    final response = await supabase.from('task_events').select().order('date');
+    final response = await supabase
+        .from('task_events')
+        .select()
+        .order('date', ascending: true);
 
     List<TaskEventModel> taskEvents = [];
     for (final taskEvent in response) {
