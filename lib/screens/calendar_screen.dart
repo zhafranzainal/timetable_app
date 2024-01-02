@@ -58,6 +58,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           showDialog(
               context: context,
               builder: (context) {
+                _eventController.clear();
                 return AlertDialog(
                   scrollable: true,
                   title: const Text('Event name'),
