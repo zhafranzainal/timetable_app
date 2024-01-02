@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timetable_app/screens/calendar_screen.dart';
 import 'package:timetable_app/screens/create_timetable_screen.dart';
 import 'package:timetable_app/screens/index_event_screen.dart';
+import 'package:timetable_app/screens/timetable_screen.dart';
 
 class SidebarMenu extends StatelessWidget {
   const SidebarMenu({super.key});
@@ -64,13 +65,17 @@ Widget buildMenuItems(BuildContext context) => Container(
           onTap: () {
             Navigator.pop(context);
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const CalendarScreen()));
+                builder: (context) => const TimetableScreen()));
           },
         ),
         ListTile(
-          leading: const Icon(Icons.calendar_view_week),
-          title: const Text('BCS SEM 2'),
-          onTap: () {},
+          leading: const Icon(Icons.calendar_month),
+          title: const Text('Calendar'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const CalendarScreen()));
+          },
         ),
       ],
     ));

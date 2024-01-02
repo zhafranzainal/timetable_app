@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:timetable_app/main.dart';
 import 'package:timetable_app/model/event_model.dart';
-import 'package:timetable_app/public_components/sidebar_menu.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -67,7 +66,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SidebarMenu(),
       appBar: AppBar(
         backgroundColor: Colors.blue.shade700,
         title: const Text('Calendar', style: TextStyle(color: Colors.white)),
@@ -84,7 +82,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 _taskEventController.clear();
                 return AlertDialog(
                   scrollable: true,
-                  title: const Text('Event name'),
+                  title: const Text('Task event name'),
                   content: Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextField(
