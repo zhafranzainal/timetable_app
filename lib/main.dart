@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timetable_app/screens/home_page_screen.dart';
 
-void main() {
+const supabaseUrl = 'https://djkvxcfdhzuvddqcxxlg.supabase.co';
+const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
+
+Future<void> main() async {
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseKey,
+  );
+
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
+
+final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
