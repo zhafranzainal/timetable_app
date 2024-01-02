@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:timetable_app/main.dart';
 import 'package:timetable_app/model/event_model.dart';
 import 'package:timetable_app/public_components/sidebar_menu.dart';
 
@@ -32,13 +33,35 @@ class _CalendarScreenState extends State<CalendarScreen> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        _selectedEvents.value = _getEventsForDay(selectedDay);
       });
+      _updateSelectedEvents(selectedDay);
     }
   }
 
   List<EventModel> _getEventsForDay(DateTime day) {
     return taskEvents[day] ?? [];
+  }
+
+  Future<List<EventModel>> _fetchEventsForDay(DateTime day) async {
+    final response = await supabase
+        .from('task_events')
+        .select()
+        .eq('date', day.toIso8601String());
+
+    List<EventModel> events = [];
+    for (final event in response) {
+      events.add(EventModel(event['name']));
+    }
+
+    return events;
+  }
+
+  void _updateSelectedEvents(DateTime selectedDay) async {
+    final events = await _fetchEventsForDay(selectedDay);
+    _selectedEvents.value = events;
+
+    taskEvents[selectedDay] = events;
+    setState(() {});
   }
 
   @override
@@ -71,12 +94,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   actions: [
                     ElevatedButton(
                       child: const Text('Submit'),
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.of(context).pop();
-                        taskEvents.addAll({
-                          _selectedDay!: [EventModel(_taskEventController.text)]
+
+                        await supabase.from('task_events').insert({
+                          'name': _taskEventController.text,
+                          'date': _selectedDay!.toIso8601String()
                         });
-                        _selectedEvents.value = _getEventsForDay(_selectedDay!);
                       },
                     )
                   ],
@@ -130,27 +154,27 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             const SizedBox(height: 8),
             Expanded(
-              child: ValueListenableBuilder<List<EventModel>>(
-                  valueListenable: _selectedEvents,
-                  builder: (context, value, _) {
-                    return ListView.builder(
-                        itemCount: value.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 4),
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ListTile(
-                              onTap: () => print(''),
-                              title: Text(value[index].title),
-                            ),
-                          );
-                        });
-                  }),
-            ),
+                child: ValueListenableBuilder<List<EventModel>>(
+              valueListenable: _selectedEvents,
+              builder: (context, value, _) {
+                return ListView.builder(
+                  itemCount: value.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        title: Text(value[index].title),
+                      ),
+                    );
+                  },
+                );
+              },
+            )),
           ],
         ),
       ),
