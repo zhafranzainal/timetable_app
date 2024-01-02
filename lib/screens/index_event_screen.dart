@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timetable_app/main.dart';
 import 'package:timetable_app/model/task_event_model.dart';
 
 class IndexEventScreen extends StatefulWidget {
@@ -9,85 +10,82 @@ class IndexEventScreen extends StatefulWidget {
 }
 
 class _IndexEventScreenState extends State<IndexEventScreen> {
-  final taskEvents = [
-    TaskEventModel(
-        day: 'Tue',
-        date: '2023-06-20',
-        time: '9.00 am',
-        title: 'PSM Presentation'),
-    TaskEventModel(
-        day: 'Tue',
-        date: '2023-06-20',
-        time: '10.00 pm',
-        title: 'OR Registration'),
-    TaskEventModel(
-        day: 'Wed',
-        date: '2023-06-21',
-        time: '10.45 am',
-        title: 'AI Presentation'),
-    TaskEventModel(
-        day: 'Thu',
-        date: '2023-06-22',
-        time: '10.45 am',
-        title: 'Proposal Presentation'),
-    TaskEventModel(
-        day: 'Thu',
-        date: '2023-06-29',
-        time: '12.00 pm',
-        title: 'SPM Final Assessment'),
-  ];
+  Future<List<TaskEventModel>> _fetchEventsFromSupabase() async {
+    final response = await supabase.from('task_events').select().order('date');
 
-  @override
-  Widget build(BuildContext context) {
-    Map<String, List<TaskEventModel>> categorizedEvents = {
-      'Today': [],
-      'Tomorrow': [],
-      'After Tomorrow': [],
-      'Upcoming Events': [],
-    };
-
-    for (var taskEvent in taskEvents) {
-      final eventDate = DateTime.parse(taskEvent.date);
-      final currentDate = DateTime(2023, 6, 20);
-      final difference = eventDate.difference(currentDate).inDays;
-
-      if (difference == 0) {
-        categorizedEvents['Today']!.add(taskEvent);
-      } else if (difference == 1) {
-        categorizedEvents['Tomorrow']!.add(taskEvent);
-      } else if (difference == 2) {
-        categorizedEvents['After Tomorrow']!.add(taskEvent);
-      } else {
-        categorizedEvents['Upcoming Events']!.add(taskEvent);
-      }
+    List<TaskEventModel> taskEvents = [];
+    for (final taskEvent in response) {
+      taskEvents.add(TaskEventModel(
+        title: taskEvent['name'],
+        date: taskEvent['date'],
+      ));
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade700,
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Events',
-              style: TextStyle(color: Colors.white),
-            ),
-            Text(
-              'June 2023',
-              style: TextStyle(color: Colors.white70, fontSize: 15),
-            ),
-          ],
-        ),
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(12),
-        children: _buildCategorizedList(categorizedEvents),
-      ),
-    );
+    return taskEvents;
   }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue.shade700,
+          title: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Events',
+                style: TextStyle(color: Colors.white),
+              ),
+              Text(
+                'All events',
+                style: TextStyle(color: Colors.white70, fontSize: 15),
+              ),
+            ],
+          ),
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+          ),
+        ),
+        body: FutureBuilder<List<TaskEventModel>>(
+          future: _fetchEventsFromSupabase(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text('Error fetching data'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No data available'));
+            }
+
+            Map<String, List<TaskEventModel>> categorizedEvents = {
+              'Today': [],
+              'Tomorrow': [],
+              'After Tomorrow': [],
+              'Upcoming Events': [],
+            };
+
+            for (var taskEvent in snapshot.data!) {
+              final eventDate = DateTime.parse(taskEvent.date);
+              final currentDate = DateTime.now();
+              final difference = eventDate.difference(currentDate).inDays;
+
+              if (difference == 0) {
+                categorizedEvents['Today']!.add(taskEvent);
+              } else if (difference == 1) {
+                categorizedEvents['Tomorrow']!.add(taskEvent);
+              } else if (difference == 2) {
+                categorizedEvents['After Tomorrow']!.add(taskEvent);
+              } else {
+                categorizedEvents['Upcoming Events']!.add(taskEvent);
+              }
+            }
+
+            return ListView(
+              padding: const EdgeInsets.all(12),
+              children: _buildCategorizedList(categorizedEvents),
+            );
+          },
+        ),
+      );
 
   List<Widget> _buildCategorizedList(
       Map<String, List<TaskEventModel>> categorizedEvents) {
@@ -122,11 +120,11 @@ class _IndexEventScreenState extends State<IndexEventScreen> {
           children: [
             Row(
               children: [
-                Text(taskEventModel.day, style: const TextStyle(fontSize: 16)),
+                Text('Hari', style: const TextStyle(fontSize: 16)),
                 const SizedBox(width: 8),
                 Text(taskEventModel.date, style: const TextStyle(fontSize: 16)),
                 const SizedBox(width: 8),
-                Text(taskEventModel.time, style: const TextStyle(fontSize: 16)),
+                Text("12.00pm", style: const TextStyle(fontSize: 16)),
               ],
             ),
             Text(
