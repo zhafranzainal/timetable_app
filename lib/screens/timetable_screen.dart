@@ -10,21 +10,31 @@ class TimetableScreen extends StatefulWidget {
 
 class _TimetableScreenState extends State<TimetableScreen> {
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue.shade700,
-          title: const Text('Timetable', style: TextStyle(color: Colors.white)),
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue.shade700,
+        title: const Text('Timetable', style: TextStyle(color: Colors.white)),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
         ),
-        body: TimetableView(
-          laneEventsList: _buildLaneEvents(),
-          onEventTap: onEventTapCallBack,
-          timetableStyle: const TimetableStyle(),
-          onEmptySlotTap: onTimeSlotTappedCallBack,
+      ),
+      body: TimetableView(
+        laneEventsList: _buildLaneEvents(),
+        onEventTap: onEventTapCallBack,
+        timetableStyle: TimetableStyle(
+          startHour: 8,
+          endHour: 18,
+          laneWidth: screenWidth * 0.18,
+          timeItemWidth: screenWidth * 0.1,
+          timeItemHeight: 66,
         ),
-      );
+        onEmptySlotTap: onTimeSlotTappedCallBack,
+      ),
+    );
+  }
 
   List<LaneEvents> _buildLaneEvents() {
     return [
@@ -46,14 +56,6 @@ class _TimetableScreenState extends State<TimetableScreen> {
       ),
       LaneEvents(
         lane: Lane(name: 'Friday', laneIndex: 5),
-        events: [],
-      ),
-      LaneEvents(
-        lane: Lane(name: 'Saturday', laneIndex: 6),
-        events: [],
-      ),
-      LaneEvents(
-        lane: Lane(name: 'Sunday', laneIndex: 7),
         events: [],
       ),
     ];
