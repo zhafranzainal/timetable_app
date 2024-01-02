@@ -40,23 +40,98 @@ class _TimetableScreenState extends State<TimetableScreen> {
     return [
       LaneEvents(
         lane: Lane(name: 'Mon', laneIndex: 1),
-        events: [],
+        events: [
+          TableEvent(
+            laneIndex: 1,
+            eventId: 1,
+            title: 'BCS3133',
+            startTime: TableEventTime(hour: 8, minute: 0),
+            endTime: TableEventTime(hour: 9, minute: 50),
+          ),
+          TableEvent(
+            laneIndex: 1,
+            eventId: 2,
+            title: 'BCS3263',
+            startTime: TableEventTime(hour: 10, minute: 0),
+            endTime: TableEventTime(hour: 11, minute: 50),
+          ),
+          TableEvent(
+            laneIndex: 3,
+            eventId: 3,
+            title: 'BCS3453',
+            startTime: TableEventTime(hour: 12, minute: 0),
+            endTime: TableEventTime(hour: 13, minute: 50),
+          ),
+        ],
       ),
       LaneEvents(
         lane: Lane(name: 'Tue', laneIndex: 2),
-        events: [],
+        events: [
+          TableEvent(
+            laneIndex: 2,
+            eventId: 4,
+            title: 'BCI3283',
+            startTime: TableEventTime(hour: 14, minute: 0),
+            endTime: TableEventTime(hour: 15, minute: 50),
+          ),
+        ],
       ),
       LaneEvents(
         lane: Lane(name: 'Wed', laneIndex: 3),
-        events: [],
+        events: [
+          TableEvent(
+            laneIndex: 3,
+            eventId: 4,
+            title: 'BCI3283',
+            startTime: TableEventTime(hour: 10, minute: 0),
+            endTime: TableEventTime(hour: 11, minute: 50),
+          ),
+        ],
       ),
       LaneEvents(
         lane: Lane(name: 'Thu', laneIndex: 4),
-        events: [],
+        events: [
+          TableEvent(
+            laneIndex: 4,
+            eventId: 5,
+            title: 'BCI3343',
+            startTime: TableEventTime(hour: 8, minute: 0),
+            endTime: TableEventTime(hour: 9, minute: 50),
+          ),
+          TableEvent(
+            laneIndex: 4,
+            eventId: 5,
+            title: 'BCI3343',
+            startTime: TableEventTime(hour: 14, minute: 0),
+            endTime: TableEventTime(hour: 15, minute: 50),
+          ),
+          TableEvent(
+            laneIndex: 4,
+            eventId: 3,
+            title: 'BCS3453',
+            startTime: TableEventTime(hour: 16, minute: 0),
+            endTime: TableEventTime(hour: 17, minute: 50),
+          ),
+        ],
       ),
       LaneEvents(
         lane: Lane(name: 'Fri', laneIndex: 5),
-        events: [],
+        events: [
+          TableEvent(
+            laneIndex: 5,
+            eventId: 1,
+            title: 'BCS3133',
+            startTime: TableEventTime(hour: 8, minute: 0),
+            endTime: TableEventTime(hour: 9, minute: 50),
+          ),
+          TableEvent(
+            laneIndex: 5,
+            eventId: 2,
+            title: 'BCS3263',
+            startTime: TableEventTime(hour: 10, minute: 0),
+            endTime: TableEventTime(hour: 11, minute: 50),
+          ),
+        ],
       ),
     ];
   }
