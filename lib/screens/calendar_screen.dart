@@ -169,6 +169,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                       child: ListTile(
                         title: Text(value[index].title),
+                        onTap: () {},
                       ),
                     );
                   },
