@@ -39,23 +39,23 @@ class _TimetableScreenState extends State<TimetableScreen> {
   List<LaneEvents> _buildLaneEvents() {
     return [
       LaneEvents(
-        lane: Lane(name: 'Monday', laneIndex: 1),
+        lane: Lane(name: 'Mon', laneIndex: 1),
         events: [],
       ),
       LaneEvents(
-        lane: Lane(name: 'Tuesday', laneIndex: 2),
+        lane: Lane(name: 'Tue', laneIndex: 2),
         events: [],
       ),
       LaneEvents(
-        lane: Lane(name: 'Wednesday', laneIndex: 3),
+        lane: Lane(name: 'Wed', laneIndex: 3),
         events: [],
       ),
       LaneEvents(
-        lane: Lane(name: 'Thursday', laneIndex: 4),
+        lane: Lane(name: 'Thu', laneIndex: 4),
         events: [],
       ),
       LaneEvents(
-        lane: Lane(name: 'Friday', laneIndex: 5),
+        lane: Lane(name: 'Fri', laneIndex: 5),
         events: [],
       ),
     ];
