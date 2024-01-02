@@ -23,6 +23,7 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
   };
 
   List<CourseModel> timetable = [];
+  bool isTrue = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
               onChanged: (value) {
                 setState(() {
                   searchedCourse = value;
+                  isTrue = true;
                 });
               },
               decoration: const InputDecoration(
@@ -49,32 +51,37 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
             // Show matched course codes and names as dropdown
             searchedCourse.isNotEmpty
                 ? Expanded(
-                    child: Dialog(
-                      child: ListView.builder(
-                        itemCount: courseCodes.length,
-                        itemBuilder: (context, index) {
-                          String courseCode = courseCodes[index];
-                          String courseName = courseMap[courseCode] ?? '';
-                          if (courseCode
-                                  .toLowerCase()
-                                  .contains(searchedCourse.toLowerCase()) ||
-                              courseName
-                                  .toLowerCase()
-                                  .contains(searchedCourse.toLowerCase())) {
-                            return ListTile(
-                              title: Text('$courseCode $courseName'),
-                              onTap: () {
-                                setState(() {
-                                  selectedCourseCode = courseCode;
-                                  selectedCourseName = courseName;
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            );
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        },
+                    child: Visibility(
+                      visible: isTrue,
+                      child: Dialog(
+                        child: ListView.builder(
+                          itemCount: courseCodes.length,
+                          itemBuilder: (context, index) {
+                            String courseCode = courseCodes[index];
+                            String courseName = courseMap[courseCode] ?? '';
+
+                            if (courseCode
+                                    .toLowerCase()
+                                    .contains(searchedCourse.toLowerCase()) ||
+                                courseName
+                                    .toLowerCase()
+                                    .contains(searchedCourse.toLowerCase())) {
+                              return ListTile(
+                                title: Text('$courseCode $courseName'),
+                                onTap: () {
+                                  isTrue = !isTrue;
+
+                                  setState(() {
+                                    selectedCourseCode = courseCode;
+                                    selectedCourseName = courseName;
+                                  });
+                                },
+                              );
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          },
+                        ),
                       ),
                     ),
                   )
