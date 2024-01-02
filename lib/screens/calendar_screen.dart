@@ -17,7 +17,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   Map<DateTime, List<EventModel>> taskEvents = {};
 
-  final TextEditingController _eventController = TextEditingController();
+  final TextEditingController _taskEventController = TextEditingController();
   late final ValueNotifier<List<EventModel>> _selectedEvents;
 
   @override
@@ -58,14 +58,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
           showDialog(
               context: context,
               builder: (context) {
-                _eventController.clear();
+                _taskEventController.clear();
                 return AlertDialog(
                   scrollable: true,
                   title: const Text('Event name'),
                   content: Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextField(
-                      controller: _eventController,
+                      controller: _taskEventController,
                     ),
                   ),
                   actions: [
@@ -74,7 +74,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       onPressed: () {
                         Navigator.of(context).pop();
                         taskEvents.addAll({
-                          _selectedDay!: [EventModel(_eventController.text)]
+                          _selectedDay!: [EventModel(_taskEventController.text)]
                         });
                         _selectedEvents.value = _getEventsForDay(_selectedDay!);
                       },
