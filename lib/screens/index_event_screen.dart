@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:timetable_app/main.dart';
 import 'package:timetable_app/model/task_event_model.dart';
 
@@ -112,27 +113,32 @@ class _IndexEventScreenState extends State<IndexEventScreen> {
     return listWidgets;
   }
 
-  Widget buildSingleCheckbox(TaskEventModel taskEventModel) => CheckboxListTile(
-        value: taskEventModel.value,
-        secondary: const Icon(Icons.error),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text('Hari', style: const TextStyle(fontSize: 16)),
-                const SizedBox(width: 8),
-                Text(taskEventModel.date, style: const TextStyle(fontSize: 16)),
-                const SizedBox(width: 8),
-                Text("12.00pm", style: const TextStyle(fontSize: 16)),
-              ],
-            ),
-            Text(
-              taskEventModel.title,
-              style: const TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
-        onChanged: (value) => setState(() => taskEventModel.value = value!),
-      );
+  Widget buildSingleCheckbox(TaskEventModel taskEventModel) {
+    final eventDate = DateTime.parse(taskEventModel.date);
+    final dayName = DateFormat.E().format(eventDate);
+
+    return CheckboxListTile(
+      value: taskEventModel.value,
+      secondary: const Icon(Icons.error),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(dayName, style: const TextStyle(fontSize: 16)),
+              const SizedBox(width: 8),
+              Text(taskEventModel.date, style: const TextStyle(fontSize: 16)),
+              const SizedBox(width: 8),
+              Text("12.00pm", style: const TextStyle(fontSize: 16)),
+            ],
+          ),
+          Text(
+            taskEventModel.title,
+            style: const TextStyle(fontSize: 20),
+          ),
+        ],
+      ),
+      onChanged: (value) => setState(() => taskEventModel.value = value!),
+    );
+  }
 }
