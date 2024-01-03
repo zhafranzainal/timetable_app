@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:timetable_app/screens/home_page_screen.dart';
+import 'package:timetable_app/screens/onboarding_screen.dart';
 
 const supabaseUrl = 'https://djkvxcfdhzuvddqcxxlg.supabase.co';
 const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePageScreen(),
+      home: const OnboardingScreen(),
     );
   }
 }
