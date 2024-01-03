@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timetable_app/screens/onboarding_screen.dart';
 
 const supabaseUrl = 'https://djkvxcfdhzuvddqcxxlg.supabase.co';
-const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
+final supabaseKey = dotenv.env['SUPABASE_KEY'];
 
 Future<void> main() async {
+  await dotenv.load();
   await Supabase.initialize(
     url: supabaseUrl,
-    anonKey: supabaseKey,
+    anonKey: supabaseKey!,
   );
 
   initializeDateFormatting().then((_) => runApp(const MyApp()));
