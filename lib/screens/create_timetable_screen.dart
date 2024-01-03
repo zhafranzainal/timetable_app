@@ -36,7 +36,8 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
           color: Colors.white,
         ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
