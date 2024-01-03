@@ -16,10 +16,12 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
   String selectedLab = '';
 
   // Course code to name mapping
-  List<String> courseCodes = ['BCS1033', 'BCI2023'];
+  List<String> courseCodes = ['BCS1033', 'BCI2023', 'BCS3133', 'BCS3263'];
   Map<String, String> courseMap = {
     'BCS1033': 'SOFTWARE ENGINEERING',
     'BCI2023': 'DATABASE SYSTEMS',
+    'BCS3133': 'SOFTWARE ENGINEERING PRACTICES',
+    'BCS3263': 'SOFTWARE QUALITY ASSURANCE',
   };
 
   List<CourseModel> timetable = [];
