@@ -29,8 +29,12 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('New timetable'),
+        backgroundColor: Colors.blue.shade700,
+        title:
+            const Text('New Timetable', style: TextStyle(color: Colors.white)),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Center(
         child: Column(
