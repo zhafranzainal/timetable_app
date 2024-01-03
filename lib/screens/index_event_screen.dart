@@ -61,18 +61,27 @@ class _IndexEventScreenState extends State<IndexEventScreen> {
             }
 
             Map<String, List<TaskEventModel>> categorizedEvents = {
+              'Late Events': [],
               'Today': [],
               'Tomorrow': [],
               'After Tomorrow': [],
               'Upcoming Events': [],
             };
 
+            int daysBetween(DateTime from, DateTime to) {
+              from = DateTime(from.year, from.month, from.day);
+              to = DateTime(to.year, to.month, to.day);
+              return (to.difference(from).inHours / 24).round();
+            }
+
             for (var taskEvent in snapshot.data!) {
               final eventDate = DateTime.parse(taskEvent.date);
               final currentDate = DateTime.now();
-              final difference = eventDate.difference(currentDate).inDays;
+              final difference = daysBetween(currentDate, eventDate);
 
-              if (difference == 0) {
+              if (difference < 0) {
+                categorizedEvents['Late Events']!.add(taskEvent);
+              } else if (difference == 0) {
                 categorizedEvents['Today']!.add(taskEvent);
               } else if (difference == 1) {
                 categorizedEvents['Tomorrow']!.add(taskEvent);
