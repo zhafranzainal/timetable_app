@@ -73,39 +73,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
           color: Colors.white,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) {
-                _taskEventController.clear();
-                return AlertDialog(
-                  scrollable: true,
-                  title: const Text('Task event name'),
-                  content: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextField(
-                      controller: _taskEventController,
-                    ),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                      child: const Text('Submit'),
-                      onPressed: () async {
-                        Navigator.of(context).pop();
-
-                        await supabase.from('task_events').insert({
-                          'name': _taskEventController.text,
-                          'date': _selectedDay!.toIso8601String()
-                        });
-                      },
-                    )
-                  ],
-                );
-              });
-        },
-      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -152,30 +119,64 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             const SizedBox(height: 8),
             Expanded(
-                child: ValueListenableBuilder<List<EventModel>>(
-              valueListenable: _selectedEvents,
-              builder: (context, value, _) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: ListTile(
-                        title: Text(value[index].title),
-                        onTap: () {},
-                      ),
-                    );
-                  },
-                );
-              },
-            )),
+              child: ValueListenableBuilder<List<EventModel>>(
+                valueListenable: _selectedEvents,
+                builder: (context, value, _) {
+                  return ListView.builder(
+                    itemCount: value.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4),
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: ListTile(
+                          title: Text(value[index].title),
+                          onTap: () {},
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                _taskEventController.clear();
+                return AlertDialog(
+                  scrollable: true,
+                  title: const Text('Task event name'),
+                  content: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: _taskEventController,
+                    ),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      child: const Text('Submit'),
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+
+                        await supabase.from('task_events').insert({
+                          'name': _taskEventController.text,
+                          'date': _selectedDay!.toIso8601String()
+                        });
+                      },
+                    )
+                  ],
+                );
+              });
+        },
       ),
     );
   }
