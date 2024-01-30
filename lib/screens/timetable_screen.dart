@@ -9,6 +9,8 @@ class TimetableScreen extends StatefulWidget {
 }
 
 class _TimetableScreenState extends State<TimetableScreen> {
+  final TextEditingController _courseController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -32,6 +34,34 @@ class _TimetableScreenState extends State<TimetableScreen> {
           timeItemHeight: 66,
         ),
         onEmptySlotTap: onTimeSlotTappedCallBack,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                _courseController.clear();
+                return AlertDialog(
+                  scrollable: true,
+                  title: const Text('Add Course'),
+                  content: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: _courseController,
+                    ),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      child: const Text('Submit'),
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                );
+              });
+        },
       ),
     );
   }
