@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timetable_app/model/course_model.dart';
 import 'package:timetable_view/timetable_view.dart';
 
 class TimetableScreen extends StatefulWidget {
@@ -85,14 +86,25 @@ class _TimetableScreenState extends State<TimetableScreen> {
                         String courseCode = _courseController.text;
 
                         if (courseCode.isNotEmpty) {
+                          CourseModel courseDetails =
+                              (courseDetailsMap[courseCode]?.first) ??
+                                  CourseModel(
+                                    code: courseCode,
+                                    startTime:
+                                        TableEventTime(hour: 8, minute: 0),
+                                    endTime:
+                                        TableEventTime(hour: 9, minute: 50),
+                                    location: 'Default Location',
+                                  );
+
                           TableEvent newEvent = TableEvent(
                             laneIndex: 1,
                             eventId: _laneEventsList.length + 1,
-                            title: courseCode,
+                            title: courseDetails.code,
                             backgroundColor: Colors.orange,
-                            startTime: TableEventTime(hour: 8, minute: 0),
-                            endTime: TableEventTime(hour: 9, minute: 50),
-                            location: 'New Location',
+                            startTime: courseDetails.startTime,
+                            endTime: courseDetails.endTime,
+                            location: courseDetails.location,
                           );
 
                           setState(() {

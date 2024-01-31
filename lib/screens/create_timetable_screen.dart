@@ -148,7 +148,7 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
                         Text('Course Name: ${course.name}'),
                         Text('Section: ${course.section}'),
                         Text('Lab: ${course.lab}'),
-                        Text('Time: ${course.time}'),
+                        Text('Time: ${course.startTime}'),
                         Text('Location: ${course.location}'),
                       ],
                     ),
@@ -164,22 +164,7 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
 
   void generateTimetable() {
     setState(() {
-      timetable = [
-        CourseModel(
-            code: selectedCourseCode,
-            name: selectedCourseName,
-            section: selectedSection,
-            lab: selectedLab,
-            time: '8:00 AM - 10:00 AM',
-            location: 'FSK15'),
-        CourseModel(
-            code: selectedCourseCode,
-            name: selectedCourseName,
-            section: selectedSection,
-            lab: selectedLab,
-            time: '10:30 AM - 12:30 PM',
-            location: 'FSK15'),
-      ];
+      timetable = [];
     });
   }
 }
