@@ -82,39 +82,48 @@ class _TimetableScreenState extends State<TimetableScreen> {
                       child: const Text('Submit'),
                       onPressed: () async {
                         Navigator.of(context).pop();
-
                         String courseCode = _courseController.text;
 
                         if (courseCode.isNotEmpty) {
-                          CourseModel courseDetails =
-                              (courseDetailsMap[courseCode]?.first) ??
-                                  CourseModel(
-                                    code: courseCode,
-                                    day: 2,
-                                    startTime:
-                                        TableEventTime(hour: 16, minute: 0),
-                                    endTime:
-                                        TableEventTime(hour: 17, minute: 50),
-                                    location: 'Default Location',
-                                  );
+                          CourseModel? courseDetails =
+                              courseDetailsMap[courseCode]?.first;
 
-                          TableEvent newEvent = TableEvent(
-                            laneIndex: 1,
-                            eventId: _laneEventsList.length + 1,
-                            title: courseDetails.code,
-                            backgroundColor: Colors.orange.withOpacity(0.8),
-                            startTime: courseDetails.startTime,
-                            endTime: courseDetails.endTime,
-                            location: courseDetails.location,
-                          );
+                          if (courseDetails != null) {
+                            TableEvent newEvent = TableEvent(
+                              laneIndex: 1,
+                              eventId: _laneEventsList.length + 1,
+                              title: courseDetails.code,
+                              backgroundColor: Colors.orange.withOpacity(0.8),
+                              startTime: courseDetails.startTime,
+                              endTime: courseDetails.endTime,
+                              location: courseDetails.location,
+                            );
 
-                          setState(() {
-                            _laneEventsList[courseDetails.day]
-                                .events
-                                .add(newEvent);
-                          });
-                        } else {
-                          print("Course code is empty");
+                            setState(() {
+                              _laneEventsList[courseDetails.day]
+                                  .events
+                                  .add(newEvent);
+                            });
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Course Not Found'),
+                                  content: Text(
+                                      'Course details for $courseCode not found.'),
+                                  actions: [
+                                    ElevatedButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         }
                       },
                     )
