@@ -90,10 +90,11 @@ class _TimetableScreenState extends State<TimetableScreen> {
                               (courseDetailsMap[courseCode]?.first) ??
                                   CourseModel(
                                     code: courseCode,
+                                    day: 2,
                                     startTime:
-                                        TableEventTime(hour: 8, minute: 0),
+                                        TableEventTime(hour: 16, minute: 0),
                                     endTime:
-                                        TableEventTime(hour: 9, minute: 50),
+                                        TableEventTime(hour: 17, minute: 50),
                                     location: 'Default Location',
                                   );
 
@@ -101,14 +102,16 @@ class _TimetableScreenState extends State<TimetableScreen> {
                             laneIndex: 1,
                             eventId: _laneEventsList.length + 1,
                             title: courseDetails.code,
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.orange.withOpacity(0.8),
                             startTime: courseDetails.startTime,
                             endTime: courseDetails.endTime,
                             location: courseDetails.location,
                           );
 
                           setState(() {
-                            _laneEventsList[1].events.add(newEvent);
+                            _laneEventsList[courseDetails.day]
+                                .events
+                                .add(newEvent);
                           });
                         } else {
                           print("Course code is empty");
