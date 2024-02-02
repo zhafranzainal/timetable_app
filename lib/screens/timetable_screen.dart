@@ -85,25 +85,29 @@ class _TimetableScreenState extends State<TimetableScreen> {
                         String courseCode = _courseController.text;
 
                         if (courseCode.isNotEmpty) {
-                          CourseModel? courseDetails =
-                              courseDetailsMap[courseCode]?.first;
+                          List<CourseModel>? courseDetailsList =
+                              courseDetailsMap[courseCode];
 
-                          if (courseDetails != null) {
-                            TableEvent newEvent = TableEvent(
-                              laneIndex: 1,
-                              eventId: _laneEventsList.length + 1,
-                              title: courseDetails.code,
-                              backgroundColor: Colors.orange.withOpacity(0.8),
-                              startTime: courseDetails.startTime,
-                              endTime: courseDetails.endTime,
-                              location: courseDetails.location,
-                            );
+                          if (courseDetailsList != null &&
+                              courseDetailsList.isNotEmpty) {
+                            for (CourseModel courseDetails
+                                in courseDetailsList) {
+                              TableEvent newEvent = TableEvent(
+                                laneIndex: 1,
+                                eventId: _laneEventsList.length + 1,
+                                title: courseDetails.code,
+                                backgroundColor: Colors.orange.withOpacity(0.8),
+                                startTime: courseDetails.startTime,
+                                endTime: courseDetails.endTime,
+                                location: courseDetails.location,
+                              );
 
-                            setState(() {
-                              _laneEventsList[courseDetails.day]
-                                  .events
-                                  .add(newEvent);
-                            });
+                              setState(() {
+                                _laneEventsList[courseDetails.day]
+                                    .events
+                                    .add(newEvent);
+                              });
+                            }
                           } else {
                             showDialog(
                               context: context,
